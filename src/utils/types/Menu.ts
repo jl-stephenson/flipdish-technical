@@ -12,7 +12,7 @@ export type TransformedMenu = Pick<MenuType, "MenuId"> & {
   MenuSection: TransformedMenuSection[];
 };
 
-type MenuSection = {
+export type MenuSection = {
   MenuSectionId: number;
   Name: string;
   Description: string | null;
@@ -31,14 +31,14 @@ type MenuSection = {
   MenuSectionMetadata: unknown[];
 };
 
-type TransformedMenuSection = Pick<
+export type TransformedMenuSection = Pick<
   MenuSection,
   "MenuSectionId" | "Name" | "Description" | "ImageName" | "ImageUrl"
 > & {
-  MenuItems: [];
+  MenuItems: TransformedMenuItem[];
 };
 
-type MenuItem = {
+export type MenuItem = {
   MenuItemId: number;
   Name: string;
   Description: string | null;
@@ -67,6 +67,26 @@ type MenuItem = {
   MenuItemMetadata: unknown[];
 };
 
+export type TransformedMenuItem = {
+  ItemId: number;
+  DisplayItems: DisplayItem[];
+  Extras: Extra[];
+};
+
+export type DisplayItem = {
+  Id: number;
+  Name: string;
+  Description: string | null;
+  Price: number;
+  ImageUrl: string | null;
+  MaxSelectCount: number;
+};
+
+export type Extra = {
+  Id: number;
+  Name: string;
+  Price: number;
+};
 
 type MenuItemOptionSet = {
   Name: string | null;
