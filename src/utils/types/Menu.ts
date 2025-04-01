@@ -8,6 +8,10 @@ export type MenuType = {
   ConcessionStores: unknown[];
 };
 
+export type TransformedMenu = Pick<MenuType, "MenuId"> & {
+  MenuSection: TransformedMenuSection[];
+};
+
 type MenuSection = {
   MenuSectionId: number;
   Name: string;
@@ -25,6 +29,13 @@ type MenuSection = {
   MenuSectionAvailability: MenuSectionAvailability;
   ConcessionStoreId?: unknown;
   MenuSectionMetadata: unknown[];
+};
+
+type TransformedMenuSection = Pick<
+  MenuSection,
+  "MenuSectionId" | "Name" | "Description" | "ImageName" | "ImageUrl"
+> & {
+  MenuItems: [];
 };
 
 type MenuItem = {
@@ -56,8 +67,9 @@ type MenuItem = {
   MenuItemMetadata: unknown[];
 };
 
+
 type MenuItemOptionSet = {
-  Name: string |null;
+  Name: string | null;
   MenuItemOptionSetId: number;
   IsMasterOptionSet: boolean;
   DisplayOrder: number;
@@ -102,10 +114,10 @@ type MenuSectionAvailability = {
 };
 
 type AvailableTime = {
-    BusinessHoursPeriodId: number;
-    DayOfWeek: number;
-    StartTime: string;
-    Period: string;
-    StartTimeEarly: string;
-    PeriodEarly: string;
-}
+  BusinessHoursPeriodId: number;
+  DayOfWeek: number;
+  StartTime: string;
+  Period: string;
+  StartTimeEarly: string;
+  PeriodEarly: string;
+};
