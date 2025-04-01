@@ -9,94 +9,103 @@ export type MenuType = {
 };
 
 type MenuSection = {
-    MenuSectionId: number;
-    Name: string;
-    Description: string;
-    DisplayOrder: number;
-    MenuItems: MenuItem[];
-    PublicId: string;
-    IsDeleted: boolean;
-    IsAvailable: boolean;
-    IsHiddenFromUsers: boolean;
-    ImageName: string | null;
-    ImageUrl: string | null;
-    CellAspectRatio: number;
-    CellLayoutType: number;
-    MenuSectionAvailability: MenuSectionAvailability;
-    ConcessionStoreId: unknown;
-    MenuSectionMetadata: unknown[];
-}
+  MenuSectionId: number;
+  Name: string;
+  Description: string | null;
+  DisplayOrder: number;
+  MenuItems: MenuItem[];
+  PublicId: string;
+  IsDeleted: boolean;
+  IsAvailable: boolean;
+  IsHiddenFromUsers: boolean;
+  ImageName: string | null;
+  ImageUrl: string | null;
+  CellAspectRatio: number;
+  CellLayoutType: number;
+  MenuSectionAvailability: MenuSectionAvailability;
+  ConcessionStoreId?: unknown;
+  MenuSectionMetadata: unknown[];
+};
 
 type MenuItem = {
-    MenuItemId: number;
-    Name: string;
-    Description: string;
-    SpicinessRating: number | null;
-    Price: number;
-    DisplayOrder: number;
-    isDeleted: boolean;
-    Alcohol: boolean;
-    Tags: unknown[];
-    PublicId: string;
-    IsAvailable: boolean;
-    MenuItemOptionSets: MenuItemOptionSet[];
-    TaxRate: unknown;
-    TaxRateId: unknown;
-    TaxValue: number;
-    MenuSectionId: number;
-    ImageName: string;
-    ImageNumber: string;
-    CellAspectRatio: number;
-    CellLayoutType: number;
-    ActualPrice: number;
-    DisableVouchers: boolean;
-    ExcludeFromVoucherDiscounting: boolean;
-    DailySpecialHours: unknown[];
-    PriceCanIncrease: boolean;
-    MenuItemMetadata: unknown[];
-}
+  MenuItemId: number;
+  Name: string;
+  Description: string | null;
+  SpicinessRating: number | null;
+  Price: number;
+  DisplayOrder: number;
+  IsDeleted: boolean;
+  Alcohol: boolean;
+  Tags: unknown[];
+  PublicId: string;
+  IsAvailable: boolean;
+  MenuItemOptionSets: MenuItemOptionSet[];
+  TaxRate?: unknown;
+  TaxRateId: unknown;
+  TaxValue: number;
+  MenuSectionId: number;
+  ImageName: string | null;
+  ImageUrl: string | null;
+  CellAspectRatio: number;
+  CellLayoutType: number;
+  ActualPrice: number;
+  DisableVouchers: boolean;
+  ExcludeFromVoucherDiscounting: boolean;
+  DailySpecialHours: unknown[];
+  PriceCanIncrease: boolean;
+  MenuItemMetadata: unknown[];
+};
 
 type MenuItemOptionSet = {
-    Name: string;
-    MenuItemOptionSetId: number;
-    IsMasterOptionSet: boolean;
-    DisplayOrder: number;
-    MinSelectCount: number;
-    MaxSelectCount: number;
-    IsDeleted: boolean;
-    PublicId: string;
-    MenuItemOptionSetItems: MenuItemOptionSetItem[];
-    ImageName: string | null;
-    ImageUrl: string | null;
-    CellAspectRatio: number;
-    CellLayoutType: number;
-    MinPrice: number;
-    MenuItemId: number;
-    MenuItemOptionSetMetadata: unknown[];
-}
+  Name: string |null;
+  MenuItemOptionSetId: number;
+  IsMasterOptionSet: boolean;
+  DisplayOrder: number;
+  MinSelectCount: number;
+  MaxSelectCount: number;
+  IsDeleted: boolean;
+  PublicId: string;
+  MenuItemOptionSetItems: MenuItemOptionSetItem[];
+  ImageName: string | null;
+  ImageUrl: string | null;
+  CellAspectRatio: number;
+  CellLayoutType: number;
+  MinPrice: number;
+  MenuItemId: number;
+  MenuItemOptionSetMetadata: unknown[];
+};
 
 type MenuItemOptionSetItem = {
-    MenuItemOptionSetItemId: number;
-    Name: string;
-    Price: number;
-    TaxRateId: unknown;
-    TaxRate: unknown;
-    TaxValue: number;
-    IsAvailable: boolean;
-    DisplayOrder: number;
-    IsDeleted: boolean;
-    Tags: unknown[];
-    NextMenuItemOptionSetId: number | null;
-    PublicId: string;
-    ImageName: string;
-    ImageUrl: string;
-    CellAspectRatio: number;
-    CellLayoutType: number;
-    OptionSetItemMetadata: unknown[];
-}
+  MenuItemOptionSetItemId: number;
+  Name: string;
+  Price: number;
+  TaxRateId?: unknown;
+  TaxRate?: unknown;
+  TaxValue: number;
+  IsAvailable: boolean;
+  DisplayOrder: number;
+  IsDeleted: boolean;
+  Tags: unknown[];
+  NextMenuItemOptionSetId: number | null;
+  PublicId: string;
+  ImageName: string | null;
+  ImageUrl: string | null;
+  CellAspectRatio: number;
+  CellLayoutType: number;
+  OptionSetItemMetadata: unknown[];
+};
 
 type MenuSectionAvailability = {
-    MenuSectionId: number;
-    AvailableTimes: unknown;
-    AvailabilityMode: number;
+  MenuSectionId: number;
+  AvailableTimes: AvailableTime[] | null;
+  AvailabilityMode: number;
+};
+
+type AvailableTime = {
+    BusinessHoursPeriodId: number;
+    DayOfWeek: number;
+    StartTime: string;
+    Period: string;
+    StartTimeEarly: string;
+    PeriodEarly: string;
 }
