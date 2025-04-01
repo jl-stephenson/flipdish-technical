@@ -11,14 +11,14 @@ describe("transform menu", () => {
     expect(transformedMenu).toHaveProperty("MenuSections");
   });
 
-  it("returns a sections array with required properties", () => {
-    const sections = transformedMenu.MenuSections;
-    expect(Object.keys(sections)).toHaveLength(6);
-    expect(sections).toHaveProperty("MenuSectionId");
-    expect(sections).toHaveProperty("Name");
-    expect(sections).toHaveProperty("Description");
-    expect(sections).toHaveProperty("ImageName");
-    expect(sections).toHaveProperty("ImageUrl");
-    expect(sections).toHaveProperty("MenuItems");
+  it("returns an array of sections objects with required properties", () => {
+    const section = transformedMenu.MenuSections[0];
+    expect(Object.keys(section)).toHaveLength(6);
+    expect(section).toHaveProperty("MenuSectionId");
+    expect(section).toHaveProperty("Name");
+    expect(section).toHaveProperty("Description");
+    expect(section).toHaveProperty("ImageName");
+    expect(section).toHaveProperty("ImageUrl");
+    expect(section).toHaveProperty("MenuItems");
   });
 });
