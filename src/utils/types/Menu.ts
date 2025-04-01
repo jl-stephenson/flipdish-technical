@@ -1,4 +1,4 @@
-export type Menu = {
+export type MenuType = {
   MenuId: number;
   MenuVersionNumber: number;
   VersionGuid: string;
@@ -56,7 +56,44 @@ type MenuItem = {
     MenuItemMetadata: unknown[];
 }
 
+type MenuItemOptionSet = {
+    Name: string;
+    MenuItemOptionSetId: number;
+    IsMasterOptionSet: boolean;
+    DisplayOrder: number;
+    MinSelectCount: number;
+    MaxSelectCount: number;
+    IsDeleted: boolean;
+    PublicId: string;
+    MenuItemOptionSetItems: MenuItemOptionSetItem[];
+    ImageName: string | null;
+    ImageUrl: string | null;
+    CellAspectRatio: number;
+    CellLayoutType: number;
+    MinPrice: number;
+    MenuItemId: number;
+    MenuItemOptionSetMetadata: unknown[];
+}
 
+type MenuItemOptionSetItem = {
+    MenuItemOptionSetItemId: number;
+    Name: string;
+    Price: number;
+    TaxRateId: unknown;
+    TaxRate: unknown;
+    TaxValue: number;
+    IsAvailable: boolean;
+    DisplayOrder: number;
+    IsDeleted: boolean;
+    Tags: unknown[];
+    NextMenuItemOptionSetId: number | null;
+    PublicId: string;
+    ImageName: string;
+    ImageUrl: string;
+    CellAspectRatio: number;
+    CellLayoutType: number;
+    OptionSetItemMetadata: unknown[];
+}
 
 type MenuSectionAvailability = {
     MenuSectionId: number;

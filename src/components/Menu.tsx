@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { MenuType } from "../utils/types/Menu";
 
 export function Menu() {
   function useMenu() {
-    return useQuery({
+    return useQuery<MenuType>({
       queryKey: ["menu"],
       queryFn: async () => {
         const response = await fetch(
