@@ -8,7 +8,11 @@ export type MenuType = {
   ConcessionStores: unknown[];
 };
 
-type MenuSection = {
+export type TransformedMenu = Pick<MenuType, "MenuId"> & {
+  MenuSections: TransformedMenuSection[];
+};
+
+export type MenuSection = {
   MenuSectionId: number;
   Name: string;
   Description: string | null;
@@ -27,7 +31,14 @@ type MenuSection = {
   MenuSectionMetadata: unknown[];
 };
 
-type MenuItem = {
+export type TransformedMenuSection = Pick<
+  MenuSection,
+  "MenuSectionId" | "Name" | "Description" | "ImageName" | "ImageUrl"
+> & {
+  MenuItems: TransformedMenuItem[];
+};
+
+export type MenuItem = {
   MenuItemId: number;
   Name: string;
   Description: string | null;
@@ -56,8 +67,29 @@ type MenuItem = {
   MenuItemMetadata: unknown[];
 };
 
-type MenuItemOptionSet = {
-  Name: string |null;
+export type TransformedMenuItem = {
+  ItemId: number;
+  MaxSelectCount: number;
+  DisplayItems: DisplayItem[];
+  Extras: Extra[];
+};
+
+export type DisplayItem = {
+  Id: string;
+  Name: string;
+  Description: string | null;
+  Price: number;
+  ImageUrl: string | null;
+};
+
+export type Extra = {
+  Id: string;
+  Name: string;
+  Price: number;
+};
+
+export type MenuItemOptionSet = {
+  Name: string | null;
   MenuItemOptionSetId: number;
   IsMasterOptionSet: boolean;
   DisplayOrder: number;
@@ -75,7 +107,7 @@ type MenuItemOptionSet = {
   MenuItemOptionSetMetadata: unknown[];
 };
 
-type MenuItemOptionSetItem = {
+export interface MenuItemOptionSetItem {
   MenuItemOptionSetItemId: number;
   Name: string;
   Price: number;
@@ -93,7 +125,12 @@ type MenuItemOptionSetItem = {
   CellAspectRatio: number;
   CellLayoutType: number;
   OptionSetItemMetadata: unknown[];
-};
+}
+
+export interface TransformedMenuItemOptionSetItem
+  extends MenuItemOptionSetItem {
+  IsMasterOptionSet: boolean;
+}
 
 type MenuSectionAvailability = {
   MenuSectionId: number;
@@ -102,10 +139,10 @@ type MenuSectionAvailability = {
 };
 
 type AvailableTime = {
-    BusinessHoursPeriodId: number;
-    DayOfWeek: number;
-    StartTime: string;
-    Period: string;
-    StartTimeEarly: string;
-    PeriodEarly: string;
-}
+  BusinessHoursPeriodId: number;
+  DayOfWeek: number;
+  StartTime: string;
+  Period: string;
+  StartTimeEarly: string;
+  PeriodEarly: string;
+};
