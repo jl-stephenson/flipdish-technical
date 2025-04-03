@@ -9,7 +9,7 @@ export type MenuType = {
 };
 
 export type TransformedMenu = Pick<MenuType, "MenuId"> & {
-  MenuSection: TransformedMenuSection[];
+  MenuSections: TransformedMenuSection[];
 };
 
 export type MenuSection = {
@@ -107,7 +107,7 @@ export type MenuItemOptionSet = {
   MenuItemOptionSetMetadata: unknown[];
 };
 
-export interface MenuItemOptionSetItem  {
+export interface MenuItemOptionSetItem {
   MenuItemOptionSetItemId: number;
   Name: string;
   Price: number;
@@ -125,9 +125,10 @@ export interface MenuItemOptionSetItem  {
   CellAspectRatio: number;
   CellLayoutType: number;
   OptionSetItemMetadata: unknown[];
-};
+}
 
-export interface TransformedMenuItemOptionSetItem extends MenuItemOptionSetItem {
+export interface TransformedMenuItemOptionSetItem
+  extends MenuItemOptionSetItem {
   IsMasterOptionSet: boolean;
 }
 

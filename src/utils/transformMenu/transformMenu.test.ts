@@ -100,6 +100,10 @@ describe("transform menu item", () => {
       expect(transformedSaladItem.Extras).toHaveLength(0);
     });
   });
+
+  describe("transform complex menu item with extras", () => {
+    
+  })
 });
 
 describe("create default display item", () => {
