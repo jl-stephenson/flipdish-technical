@@ -28,6 +28,7 @@ export function transformMenuSection(
 }
 
 export function transformMenuItem(item: MenuItem) {
+  // if option set has at least 1 min select count map display item for each option
   const requiredOptionItems = item.MenuItemOptionSets.filter(
     (optionSet) => optionSet.MinSelectCount > 0,
   )
@@ -39,6 +40,7 @@ export function transformMenuItem(item: MenuItem) {
     )
     .flat();
 
+  // if option set has 0 min select count, treat as option extras
   const optionalOptionItems = item.MenuItemOptionSets.filter(
     (optionSet) => optionSet.MinSelectCount === 0,
   )
@@ -68,7 +70,7 @@ export function findHighestMaxSelect(item: MenuItem) {
 
 export function createDefaultDisplayItem(item: MenuItem) {
   return {
-    Id: item.MenuItemId,
+    Id: `item-${item.MenuItemId}`,
     Name: item.Name,
     Description: item.Description,
     Price: item.Price,
@@ -81,7 +83,7 @@ function createDisplayItemFromOption(
   optionItem: TransformedMenuItemOptionSetItem,
 ) {
   return {
-    Id: optionItem.MenuItemOptionSetItemId,
+    Id: `option-${optionItem.MenuItemOptionSetItemId}`,
     Name:
       item.Name === optionItem.Name
         ? optionItem.Name
@@ -96,7 +98,7 @@ function createDisplayItemFromOption(
 
 function createOptionalExtraItem(extra: MenuItemOptionSetItem) {
   return {
-    Id: extra.MenuItemOptionSetItemId,
+    Id: `extra-${extra.MenuItemOptionSetItemId}`,
     Name: extra.Name,
     Price: extra.Price,
   };

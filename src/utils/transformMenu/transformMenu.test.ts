@@ -60,7 +60,7 @@ describe("transform menu item", () => {
       const displayItems = transformedCurryItem.DisplayItems;
       expect(displayItems).toHaveLength(1);
       expect(displayItems[0]).toMatchObject({
-        Id: curry.MenuItemId,
+        Id: `item-${curry.MenuItemId}`,
         Name: curry.Name,
         Description: curry.Description,
         Price: curry.Price,
@@ -89,7 +89,7 @@ describe("transform menu item", () => {
         salad.MenuItemOptionSets[0].MenuItemOptionSetItems[0];
 
       expect(transformedSaladItem.DisplayItems[0]).toMatchObject({
-        Id: saladOptionItem1.MenuItemOptionSetItemId,
+        Id: `option-${saladOptionItem1.MenuItemOptionSetItemId}`,
         Name: `${salad.Name} - ${saladOptionItem1.Name}`,
         Price: salad.Price + saladOptionItem1.Price,
         ImageUrl: salad.ImageUrl,
@@ -102,8 +102,29 @@ describe("transform menu item", () => {
   });
 
   describe("transform complex menu item with extras", () => {
-    
-  })
+    const chips = menuData.MenuSections[0].MenuItems[1];
+    const transformedChips = transformMenuItem(chips);
+
+    it("returns the correct number of display items", () => {
+      expect(transformedChips.DisplayItems).toHaveLength(
+        chips.MenuItemOptionSets.filter(
+          (optionSet) => optionSet.MinSelectCount > 0,
+        )
+          .map((optionSet) => optionSet.MenuItemOptionSetItems)
+          .flat().length,
+      );
+    });
+
+    it("returns the correct number of extras", () => {
+      expect(transformedChips.Extras).toHaveLength(
+        chips.MenuItemOptionSets.filter(
+          (optionSet) => optionSet.MinSelectCount === 0,
+        )
+          .map((optionSet) => optionSet.MenuItemOptionSetItems)
+          .flat().length,
+      );
+    });
+  });
 });
 
 describe("create default display item", () => {
@@ -112,7 +133,7 @@ describe("create default display item", () => {
     const DisplayItem = createDefaultDisplayItem(curry);
 
     expect(DisplayItem).toMatchObject({
-      Id: curry.MenuItemId,
+      Id: `item-${curry.MenuItemId}`,
       Name: curry.Name,
       Description: curry.Description,
       Price: curry.Price,

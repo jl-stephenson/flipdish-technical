@@ -75,7 +75,7 @@ export type TransformedMenuItem = {
 };
 
 export type DisplayItem = {
-  Id: number;
+  Id: string;
   Name: string;
   Description: string | null;
   Price: number;
@@ -83,7 +83,7 @@ export type DisplayItem = {
 };
 
 export type Extra = {
-  Id: number;
+  Id: string;
   Name: string;
   Price: number;
 };
