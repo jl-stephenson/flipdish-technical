@@ -124,6 +124,17 @@ describe("transform menu item", () => {
           .flat().length,
       );
     });
+
+    it("returns extras with correct properties", () => {
+      const firstChipsExtra =
+        chips.MenuItemOptionSets[1].MenuItemOptionSetItems[0];
+
+      expect(transformedChips.Extras[0]).toMatchObject({
+        Id: `extra-${firstChipsExtra.MenuItemOptionSetItemId}`,
+        Name: firstChipsExtra.Name,
+        Price: firstChipsExtra.Price,
+      });
+    });
   });
 });
 
