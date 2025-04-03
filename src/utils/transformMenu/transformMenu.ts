@@ -63,7 +63,7 @@ export function transformMenuItem(item: MenuItem) {
 export function findHighestMaxSelect(item: MenuItem) {
   return item.MenuItemOptionSets.reduce((max, optionSet) => {
     return optionSet.MaxSelectCount > max ? optionSet.MaxSelectCount : max;
-  }, 0);
+  }, 1);
 }
 
 export function createDefaultDisplayItem(item: MenuItem) {

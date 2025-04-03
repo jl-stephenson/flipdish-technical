@@ -42,28 +42,62 @@ describe("transform menu section", () => {
   });
 });
 
-describe("transform of simple menu item", () => {
-  const curry = menuData.MenuSections[1].MenuItems[0];
-  const transformedCurryItem = transformMenuItem(curry);
+describe("transform menu item", () => {
+  describe("transform simple menu item", () => {
+    const curry = menuData.MenuSections[1].MenuItems[0];
+    const transformedCurryItem = transformMenuItem(curry);
 
-  it("returns tranformed menu item with correct properties", () => {
-    expect(transformedCurryItem).toMatchObject({
-      ItemId: curry.MenuItemId,
-      MaxSelectCount: findHighestMaxSelect(curry),
-      DisplayItems: expect.any(Array),
-      Extras: expect.any(Array),
+    it("returns tranformed menu item with correct properties", () => {
+      expect(transformedCurryItem).toMatchObject({
+        ItemId: curry.MenuItemId,
+        MaxSelectCount: findHighestMaxSelect(curry),
+        DisplayItems: expect.any(Array),
+        Extras: expect.any(Array),
+      });
+    });
+
+    it("returns a single display item with correct properties", () => {
+      const displayItems = transformedCurryItem.DisplayItems;
+      expect(displayItems).toHaveLength(1);
+      expect(displayItems[0]).toMatchObject({
+        Id: curry.MenuItemId,
+        Name: curry.Name,
+        Description: curry.Description,
+        Price: curry.Price,
+        ImageUrl: curry.ImageUrl,
+      });
+    });
+
+    it("returns an empty extras array", () => {
+      const extras = transformedCurryItem.Extras;
+      expect(extras).toHaveLength(0);
     });
   });
 
-  it("returns a single display item with correct properties", () => {
-    const displayItems = transformedCurryItem.DisplayItems;
-    expect(displayItems).toHaveLength(1);
-    expect(displayItems[0]).toMatchObject({
-      Id: curry.MenuItemId,
-      Name: curry.Name,
-      Description: curry.Description,
-      Price: curry.Price,
-      ImageUrl: curry.ImageUrl,
+  describe("transform complex menu item with no extras", () => {
+    const salad = menuData.MenuSections[0].MenuItems[0];
+    const transformedSaladItem = transformMenuItem(salad);
+
+    it("returns the correct number of display items", () => {
+      expect(transformedSaladItem.DisplayItems).toHaveLength(
+        salad.MenuItemOptionSets[0].MenuItemOptionSetItems.length,
+      );
+    });
+
+    it("returns display items with correct properties and values", () => {
+      const saladOptionItem1 =
+        salad.MenuItemOptionSets[0].MenuItemOptionSetItems[0];
+
+      expect(transformedSaladItem.DisplayItems[0]).toMatchObject({
+        Id: saladOptionItem1.MenuItemOptionSetItemId,
+        Name: `${salad.Name} - ${saladOptionItem1.Name}`,
+        Price: salad.Price + saladOptionItem1.Price,
+        ImageUrl: salad.ImageUrl,
+      });
+    });
+
+    it("returns an empty extras array", () => {
+      expect(transformedSaladItem.Extras).toHaveLength(0);
     });
   });
 });
