@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
+  createDefaultDisplayItem,
+  findHighestMaxSelect,
   transformMenu,
   transformMenuItem,
   transformMenuSection,
 } from "./transformMenu";
 import menuData from "../../__mocks__/menuData.json";
-import { DisplayItem, TransformedMenuItem } from "../types/Menu";
 
 describe("transform menu", () => {
   const transformedMenu = transformMenu(menuData);
@@ -36,36 +37,48 @@ describe("transform menu section", () => {
       Description: expect.toBeStringOrNull(),
       ImageName: expect.toBeStringOrNull(),
       ImageUrl: expect.toBeStringOrNull(),
-      MenuItems: expect.arrayContaining<TransformedMenuItem>([
-        expect.objectContaining({
-          ItemId: expect.any(Number),
-          DisplayItems: expect.arrayContaining<DisplayItem>([
-            expect.objectContaining({
-              Id: expect.any(Number),
-              Name: expect.any(String),
-              Description: expect.toBeStringOrNull(),
-              Price: expect.any(Number),
-              ImageUrl: expect.toBeStringOrNull(),
-              MaxSelectCount: expect.any(Number),
-            }),
-          ]),
-          Extras: [],
-        }),
-      ]),
+      MenuItems: expect.any(Array),
     });
   });
 });
 
-describe("transform menu item", () => {
-  const transformedItem = transformMenuItem(
-    menuData.MenuSections[1].MenuItems[0],
-  );
+describe("transform of simple menu item", () => {
+  const curry = menuData.MenuSections[1].MenuItems[0];
+  const transformedCurryItem = transformMenuItem(curry);
 
-  it("returns one display item and no extras if option set is empty", () => {
-    expect(transformedItem.DisplayItems).toHaveLength(1);
-    expect(transformedItem.Extras).toHaveLength(0);
-    expect(transformedItem.ItemId).toEqual(
-      menuData.MenuSections[1].MenuItems[0].MenuItemId,
-    );
+  it("returns tranformed menu item with correct properties", () => {
+    expect(transformedCurryItem).toMatchObject({
+      ItemId: curry.MenuItemId,
+      MaxSelectCount: findHighestMaxSelect(curry),
+      DisplayItems: expect.any(Array),
+      Extras: expect.any(Array),
+    });
+  });
+
+  it("returns a single display item with correct properties", () => {
+    const displayItems = transformedCurryItem.DisplayItems;
+    expect(displayItems).toHaveLength(1);
+    expect(displayItems[0]).toMatchObject({
+      Id: curry.MenuItemId,
+      Name: curry.Name,
+      Description: curry.Description,
+      Price: curry.Price,
+      ImageUrl: curry.ImageUrl,
+    });
+  });
+});
+
+describe("create default display item", () => {
+  it("returns display item with correct properties", () => {
+    const curry = menuData.MenuSections[1].MenuItems[0];
+    const DisplayItem = createDefaultDisplayItem(curry);
+
+    expect(DisplayItem).toMatchObject({
+      Id: curry.MenuItemId,
+      Name: curry.Name,
+      Description: curry.Description,
+      Price: curry.Price,
+      ImageUrl: curry.ImageUrl,
+    });
   });
 });

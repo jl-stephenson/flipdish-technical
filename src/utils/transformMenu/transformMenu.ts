@@ -3,6 +3,8 @@ import {
   MenuSection,
   TransformedMenuSection,
   MenuItem,
+  MenuItemOptionSetItem,
+  TransformedMenuItemOptionSetItem,
 } from "../types/Menu";
 
 export function transformMenu(data: MenuType) {
@@ -26,29 +28,76 @@ export function transformMenuSection(
 }
 
 export function transformMenuItem(item: MenuItem) {
-  // return an array of diplayItems and extras
+  const requiredOptionItems = item.MenuItemOptionSets.filter(
+    (optionSet) => optionSet.MinSelectCount > 0,
+  )
+    .map((optionSet) =>
+      optionSet.MenuItemOptionSetItems.map((item) => ({
+        ...item,
+        IsMasterOptionSet: optionSet.IsMasterOptionSet,
+      })),
+    )
+    .flat();
 
-  if (item.MenuItemOptionSets.length === 0)
-    return {
-      ItemId: item.MenuItemId,
-      DisplayItems: [createDefaultDisplayItem(item, 1)],
-      Extras: [],
-    };
+  const optionalOptionItems = item.MenuItemOptionSets.filter(
+    (optionSet) => optionSet.MinSelectCount === 0,
+  )
+    .map((optionSet) => optionSet.MenuItemOptionSetItems)
+    .flat();
+
+  const highestMaxSelect = findHighestMaxSelect(item);
 
   return {
     ItemId: item.MenuItemId,
-    DisplayItems: [createDefaultDisplayItem(item, 1)],
-    Extras: [],
+    MaxSelectCount: highestMaxSelect,
+    DisplayItems:
+      requiredOptionItems.length > 0
+        ? requiredOptionItems.map((optionItem) =>
+            createDisplayItemFromOption(item, optionItem),
+          )
+        : [createDefaultDisplayItem(item)],
+    Extras: optionalOptionItems.map((extra) => createOptionalExtraItem(extra)),
   };
 }
 
-function createDefaultDisplayItem(item: MenuItem, MaxSelectCount: number) {
+export function findHighestMaxSelect(item: MenuItem) {
+  return item.MenuItemOptionSets.reduce((max, optionSet) => {
+    return optionSet.MaxSelectCount > max ? optionSet.MaxSelectCount : max;
+  }, 0);
+}
+
+export function createDefaultDisplayItem(item: MenuItem) {
   return {
     Id: item.MenuItemId,
     Name: item.Name,
     Description: item.Description,
     Price: item.Price,
     ImageUrl: item.ImageUrl,
-    MaxSelectCount,
+  };
+}
+
+function createDisplayItemFromOption(
+  item: MenuItem,
+  optionItem: TransformedMenuItemOptionSetItem,
+) {
+  return {
+    Id: optionItem.MenuItemOptionSetItemId,
+    Name:
+      item.Name === optionItem.Name
+        ? optionItem.Name
+        : `${item.Name} - ${optionItem.Name}`,
+    Description: item.Description,
+    Price: optionItem.IsMasterOptionSet
+      ? optionItem.Price
+      : item.Price + optionItem.Price,
+    ImageUrl: optionItem.ImageUrl ?? item.ImageUrl,
+  };
+}
+
+function createOptionalExtraItem(extra: MenuItemOptionSetItem) {
+  return {
+    Id: extra.MenuItemOptionSetItemId,
+    Name: extra.Name,
+    Price: extra.Price,
   };
 }

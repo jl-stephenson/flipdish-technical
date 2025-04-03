@@ -69,6 +69,7 @@ export type MenuItem = {
 
 export type TransformedMenuItem = {
   ItemId: number;
+  MaxSelectCount: number;
   DisplayItems: DisplayItem[];
   Extras: Extra[];
 };
@@ -79,7 +80,6 @@ export type DisplayItem = {
   Description: string | null;
   Price: number;
   ImageUrl: string | null;
-  MaxSelectCount: number;
 };
 
 export type Extra = {
@@ -88,7 +88,7 @@ export type Extra = {
   Price: number;
 };
 
-type MenuItemOptionSet = {
+export type MenuItemOptionSet = {
   Name: string | null;
   MenuItemOptionSetId: number;
   IsMasterOptionSet: boolean;
@@ -107,7 +107,7 @@ type MenuItemOptionSet = {
   MenuItemOptionSetMetadata: unknown[];
 };
 
-type MenuItemOptionSetItem = {
+export interface MenuItemOptionSetItem  {
   MenuItemOptionSetItemId: number;
   Name: string;
   Price: number;
@@ -126,6 +126,10 @@ type MenuItemOptionSetItem = {
   CellLayoutType: number;
   OptionSetItemMetadata: unknown[];
 };
+
+export interface TransformedMenuItemOptionSetItem extends MenuItemOptionSetItem {
+  IsMasterOptionSet: boolean;
+}
 
 type MenuSectionAvailability = {
   MenuSectionId: number;
