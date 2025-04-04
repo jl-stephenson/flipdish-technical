@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  createDefaultDisplayItem,
   findHighestMaxSelect,
   transformMenu,
   transformMenuItem,
@@ -57,9 +56,8 @@ describe("transform menu item", () => {
     });
 
     it("returns a single display item with correct properties", () => {
-      const displayItems = transformedCurryItem.DisplayItems;
-      expect(displayItems).toHaveLength(1);
-      expect(displayItems[0]).toMatchObject({
+      expect(transformedCurryItem.DisplayItems).toHaveLength(1);
+      expect(transformedCurryItem.DisplayItems[0]).toMatchObject({
         Id: `item-${curry.MenuItemId}`,
         Name: curry.Name,
         Description: curry.Description,
@@ -136,19 +134,38 @@ describe("transform menu item", () => {
       });
     });
   });
+
+  describe("display item price caclulation", () => {
+    const salad = menuData.MenuSections[0].MenuItems[0];
+    const transformedSaladItem = transformMenuItem(salad);
+    const chips = menuData.MenuSections[0].MenuItems[1];
+    const transformedChips = transformMenuItem(chips);
+
+    it("returns correct price if option is master set", () => {
+      expect(transformedChips.DisplayItems[1].Price).toEqual(
+        chips.MenuItemOptionSets[0].MenuItemOptionSetItems[1].Price,
+      );
+    });
+
+    it("returns correct price if option is NOT master set", () => {
+      expect(transformedSaladItem.DisplayItems[1].Price).toEqual(
+        salad.Price +
+          salad.MenuItemOptionSets[0].MenuItemOptionSetItems[1].Price,
+      );
+    });
+  });
 });
 
-describe("create default display item", () => {
-  it("returns display item with correct properties", () => {
-    const curry = menuData.MenuSections[1].MenuItems[0];
-    const DisplayItem = createDefaultDisplayItem(curry);
+describe("find highest max select count", () => {
+  it("returns the correct highest max select", () => {
+    const chips = menuData.MenuSections[0].MenuItems[1];
+    const result = findHighestMaxSelect(chips);
+    expect(result).toEqual(3);
+  });
 
-    expect(DisplayItem).toMatchObject({
-      Id: `item-${curry.MenuItemId}`,
-      Name: curry.Name,
-      Description: curry.Description,
-      Price: curry.Price,
-      ImageUrl: curry.ImageUrl,
-    });
+  it("returns default highest max select if item has no option sets", () => {
+    const curry = menuData.MenuSections[1].MenuItems[0];
+    const result = findHighestMaxSelect(curry);
+    expect(result).toBe(1);
   });
 });
