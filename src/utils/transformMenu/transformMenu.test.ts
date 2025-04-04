@@ -135,7 +135,7 @@ describe("transform menu item", () => {
     });
   });
 
-  describe("display item price caclulation", () => {
+  describe("display item price calculation", () => {
     const salad = menuData.MenuSections[0].MenuItems[0];
     const transformedSaladItem = transformMenuItem(salad);
     const chips = menuData.MenuSections[0].MenuItems[1];
