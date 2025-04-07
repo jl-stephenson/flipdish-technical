@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { MenuType } from "../utils/types/Menu";
+import { TransformedMenu } from "../../utils/types/Menu";
 
 export function Menu() {
   function useMenu() {
-    return useQuery<MenuType>({
+    return useQuery<TransformedMenu>({
       queryKey: ["menu"],
       queryFn: async () => {
         const response = await fetch(
@@ -18,5 +18,16 @@ export function Menu() {
   }
 
   const { data: menu, error, isError, isPending } = useMenu();
-  return <></>;
+  return (
+    <main className="mx-auto max-w-7xl p-2">
+      <h1 className="mx-auto text-3xl">Menu</h1>
+      {isPending && <p data-testid="loading">Loading...</p>}
+      {isError && <p>{error.message}</p>}
+      {menu?.MenuSections.map((section) => (
+        <section key={section.MenuSectionId}>
+          <h2>{section.Name}</h2>
+        </section>
+      ))}
+    </main>
+  );
 }
