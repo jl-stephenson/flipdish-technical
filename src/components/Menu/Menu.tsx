@@ -51,7 +51,7 @@ export function Menu() {
                 item.DisplayItems.map((displayItem) => (
                   <div
                     key={displayItem.Id}
-                    className="grid gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-2 py-4"
+                    className="grid gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-2 py-4 hover:shadow-2xl shadow-slate-400"
                   >
                     <div className="col-start-1 col-end-2 space-y-2">
                       <h4>{displayItem.Name}</h4>
