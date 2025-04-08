@@ -33,7 +33,7 @@ export type MenuSection = {
 
 export type TransformedMenuSection = Pick<
   MenuSection,
-  "MenuSectionId" | "Name" | "Description" | "ImageName" | "ImageUrl"
+  "MenuSectionId" | "Name" | "Description" | "ImageUrl"
 > & {
   MenuItems: TransformedMenuItem[];
 };

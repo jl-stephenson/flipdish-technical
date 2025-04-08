@@ -21,7 +21,6 @@ export function transformMenuSection(
     MenuSectionId: section.MenuSectionId,
     Name: section.Name,
     Description: section.Description,
-    ImageName: section.ImageName,
     ImageUrl: section.ImageUrl,
     MenuItems: section.MenuItems.map(transformMenuItem),
   };
