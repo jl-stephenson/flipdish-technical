@@ -21,7 +21,6 @@ export function Menu() {
 
   const { data: menu, error, isError, isPending } = useMenu();
 
-  console.log(menu);
   return (
     <main className="mx-auto mt-6 max-w-7xl space-y-8 p-2">
       <h1 className="mx-auto text-center text-4xl">Menu</h1>
@@ -45,32 +44,30 @@ export function Menu() {
             )}
           </header>
           <div className="my-4 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
-            {section.MenuItems.map(
-              (item) =>
-                item.DisplayItems &&
-                item.DisplayItems.map((displayItem) => (
-                  <div
-                    key={displayItem.Id}
-                    className="grid gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-2 py-4 shadow-slate-400 hover:shadow-2xl"
-                  >
-                    <div className="col-start-1 col-end-2 space-y-2">
-                      <h4>{displayItem.Name}</h4>
-                      <p className="text-slate-500">
-                        {formatPrice(displayItem.Price)}
-                      </p>
-                      <p className="mt-3">{displayItem.Description}</p>
-                    </div>
-                    {displayItem.ImageUrl && (
-                      <div className="col-start-2 col-end-3 justify-self-end self-center">
-                        <img
-                          src={displayItem.ImageUrl}
-                          alt={displayItem.Name}
-                          className="aspect-square h-24 w-24 rounded-lg object-cover object-center"
-                        />
-                      </div>
-                    )}
+            {section.MenuItems.map((item) =>
+              item.DisplayItems.map((displayItem) => (
+                <div
+                  key={displayItem.Id}
+                  className="grid gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-2 py-4 shadow-slate-400 hover:shadow-2xl"
+                >
+                  <div className="col-start-1 col-end-2 space-y-2">
+                    <h4>{displayItem.Name}</h4>
+                    <p className="text-slate-500">
+                      {formatPrice(displayItem.Price)}
+                    </p>
+                    <p className="mt-3">{displayItem.Description}</p>
                   </div>
-                )),
+                  {displayItem.ImageUrl && (
+                    <div className="col-start-2 col-end-3 self-center justify-self-end">
+                      <img
+                        src={displayItem.ImageUrl}
+                        alt={displayItem.Name}
+                        className="aspect-square h-24 w-24 rounded-lg object-cover object-center"
+                      />
+                    </div>
+                  )}
+                </div>
+              )),
             )}
           </div>
         </section>
