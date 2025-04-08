@@ -51,15 +51,17 @@ export function Menu() {
                 item.DisplayItems.map((displayItem) => (
                   <div
                     key={displayItem.Id}
-                    className="grid gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-2 py-4 hover:shadow-2xl shadow-slate-400"
+                    className="grid gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-2 py-4 shadow-slate-400 hover:shadow-2xl"
                   >
                     <div className="col-start-1 col-end-2 space-y-2">
                       <h4>{displayItem.Name}</h4>
-                      <p>{formatPrice(displayItem.Price)}</p>
-                      <p>{displayItem.Description}</p>
+                      <p className="text-slate-500">
+                        {formatPrice(displayItem.Price)}
+                      </p>
+                      <p className="mt-3">{displayItem.Description}</p>
                     </div>
                     {displayItem.ImageUrl && (
-                      <div className="col-start-2 col-end-3 justify-self-end">
+                      <div className="col-start-2 col-end-3 justify-self-end self-center">
                         <img
                           src={displayItem.ImageUrl}
                           alt={displayItem.Name}
