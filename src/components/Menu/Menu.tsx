@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { transformMenu } from "../../utils/transformMenu/transformMenu";
 import { formatPrice } from "../../utils/utils";
+import { Dialog, DialogTrigger } from "../ui/dialog";
+import { ExtrasDialog } from "../ExtrasDialog";
+import { Button } from "../ui/button";
 
 export function Menu() {
   function useMenu() {
@@ -48,7 +51,7 @@ export function Menu() {
               item.DisplayItems.map((displayItem) => (
                 <div
                   key={displayItem.Id}
-                  className="grid gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-2 py-4 shadow-slate-400 hover:shadow-2xl"
+                  className="grid grid-cols-[1fr_100px_40px] gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-2 py-4 shadow-slate-400 hover:shadow-2xl"
                 >
                   <div className="col-start-1 col-end-2 space-y-2">
                     <h4>{displayItem.Name}</h4>
@@ -57,15 +60,24 @@ export function Menu() {
                     </p>
                     <p className="mt-3">{displayItem.Description}</p>
                   </div>
-                  {displayItem.ImageUrl && (
-                    <div className="col-start-2 col-end-3 self-center justify-self-end">
+                 
+                    <div className="col-start-2 col-end-3 self-center">
+                    {displayItem.ImageUrl && (
                       <img
                         src={displayItem.ImageUrl}
                         alt={displayItem.Name}
                         className="aspect-square h-24 w-24 rounded-lg object-cover object-center"
-                      />
+                      /> )}
                     </div>
-                  )}
+                 
+                  <Dialog>
+                    <DialogTrigger>
+                      <Button className="col-start-2 col-end-3 h-full w-full rounded-md hover:cursor-pointer hover:text-white hover:bg-slate-600">
+                        +
+                      </Button>
+                    </DialogTrigger>
+                    <ExtrasDialog extras={item.Extras} displayItem={displayItem} maxSelectCount={item.MaxSelectCount} />
+                  </Dialog>
                 </div>
               )),
             )}
