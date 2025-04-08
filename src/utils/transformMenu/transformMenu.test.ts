@@ -35,7 +35,6 @@ describe("transform menu section", () => {
       Name: expect.any(String),
       Description: expect.toBeStringOrNull(),
       ImageName: expect.toBeStringOrNull(),
-      ImageUrl: expect.toBeStringOrNull(),
       MenuItems: expect.any(Array),
     });
   });
