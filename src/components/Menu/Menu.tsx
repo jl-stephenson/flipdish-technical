@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { transformMenu } from "../../utils/transformMenu/transformMenu";
 import { formatPrice } from "../../utils/utils";
-import { Dialog, DialogTrigger } from "../ui/dialog";
 import { ExtrasDialog } from "../ExtrasDialog";
-import { Button } from "../ui/button";
 
 export function Menu() {
   function useMenu() {
@@ -60,24 +58,21 @@ export function Menu() {
                     </p>
                     <p className="mt-3">{displayItem.Description}</p>
                   </div>
-                 
-                    <div className="col-start-2 col-end-3 self-center">
+
+                  <div className="col-start-2 col-end-3 self-center">
                     {displayItem.ImageUrl && (
                       <img
                         src={displayItem.ImageUrl}
                         alt={displayItem.Name}
                         className="aspect-square h-24 w-24 rounded-lg object-cover object-center"
-                      /> )}
-                    </div>
-                 
-                  <Dialog>
-                    <DialogTrigger>
-                      <Button className="col-start-2 col-end-3 h-full w-full rounded-md hover:cursor-pointer hover:text-white hover:bg-slate-600">
-                        +
-                      </Button>
-                    </DialogTrigger>
-                    <ExtrasDialog extras={item.Extras} displayItem={displayItem} maxSelectCount={item.MaxSelectCount} />
-                  </Dialog>
+                      />
+                    )}
+                  </div>
+                  <ExtrasDialog
+                    extras={item.Extras}
+                    displayItem={displayItem}
+                    maxSelectCount={item.MaxSelectCount}
+                  />
                 </div>
               )),
             )}
