@@ -9,7 +9,7 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatPrice } from "@/utils/utils";
 import { DisplayItem, Extra } from "@/utils/types/Menu";
 
@@ -30,35 +30,41 @@ export function ExtrasDialog({
   function onSubmit() {
     toast.success(`${displayItem.Name} added to basket`);
     setIsOpen(false);
-    reset();
   }
 
   useEffect(() => {
     if (!isOpen) reset();
   }, [isOpen, reset]);
 
-  const formData = watch();
+  const watchedExtras = watch("extras");
 
   const selectedExtras = extras.filter((extra) =>
-    formData.extras ? formData.extras[extra.Id] === true : false,
+    watchedExtras ? watchedExtras[extra.Id] === true : false,
   );
 
   const hasReachedMaximum = selectedExtras.length === maxSelectCount;
-  const extrasTotalPrice = selectedExtras.reduce((total, extra) => {
-    return total + (extra.Price || 0);
-  }, 0);
+  const extrasTotalPrice = useMemo(() => {
+    return selectedExtras.reduce((total, extra) => {
+      return total + (extra.Price || 0);
+    }, 0);
+  }, [selectedExtras]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>
-        <Button className="col-start-2 col-end-3 h-24 w-full rounded-md text-xl hover:cursor-pointer hover:bg-slate-600">
-          +<span className="sr-only">Add to basket</span>
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
+      <div className="col-start-3 col-end-4 self-center h-24 w-full">
+        <DialogTrigger asChild>
+          <Button className="rounded-md h-full text-xl hover:cursor-pointer hover:bg-slate-600">
+            +<span className="sr-only">Add to basket</span>
+          </Button>
+        </DialogTrigger>
+      </div>
+      <DialogContent aria-describedby="dialog-description">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
             <DialogTitle className="mb-2">Add {displayItem.Name}</DialogTitle>
+            <p id="dialog-description" className="sr-only">
+              Select up to {maxSelectCount} extras for {displayItem.Name}
+            </p>
           </DialogHeader>
           <div className="mb-4 grid gap-4">
             <h4 className="font-medium">Extras:</h4>
@@ -76,9 +82,7 @@ export function ExtrasDialog({
                       {...register(`extras.${extra.Id}`)}
                       id={extra.Name}
                       type="checkbox"
-                      disabled={
-                        hasReachedMaximum && !formData.extras?.[extra.Id]
-                      }
+                      disabled={hasReachedMaximum && !watchedExtras?.[extra.Id]}
                     />
                   </div>
                 ))
