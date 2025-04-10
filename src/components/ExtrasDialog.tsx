@@ -25,10 +25,9 @@ export function ExtrasDialog({
   maxSelectCount,
 }: ExtrasDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const { register, reset, watch } = useForm();
+  const { handleSubmit, register, reset, watch } = useForm();
 
-  function notify(event) {
-    event.preventDefault();
+  function onSubmit() {
     toast.success(`${displayItem.Name} added to basket`);
     setIsOpen(false);
   }
@@ -56,7 +55,7 @@ export function ExtrasDialog({
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <form onSubmit={notify}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
             <DialogTitle>Add {displayItem.Name}</DialogTitle>
           </DialogHeader>
