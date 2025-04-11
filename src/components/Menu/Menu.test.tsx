@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { Menu } from "./Menu";
-import menuData from "../../__mocks__/menuData.json";
+import menuData from "@/__mocks__/menuData.json"
 
 const server = setupServer(
   http.get("https://menus.flipdish.co/prod/16798/*", () => {
@@ -21,6 +21,7 @@ describe("menu render", () => {
     server.resetHandlers();
     queryClient.clear();
   });
+  
   afterAll(() => server.close());
 
   describe("successful API response", () => {

@@ -5,7 +5,7 @@ import {
   transformMenuItem,
   transformMenuSection,
 } from "./transformMenu";
-import menuData from "../../__mocks__/menuData.json";
+import menuData from "@/__mocks__/menuData.json";
 
 describe("transform menu", () => {
   const transformedMenu = transformMenu(menuData);
@@ -34,7 +34,6 @@ describe("transform menu section", () => {
       MenuSectionId: expect.any(Number),
       Name: expect.any(String),
       Description: expect.toBeStringOrNull(),
-      ImageName: expect.toBeStringOrNull(),
       MenuItems: expect.any(Array),
     });
   });

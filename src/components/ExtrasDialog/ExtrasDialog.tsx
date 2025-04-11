@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Button } from "./ui/button";
+} from "../ui/dialog";
+import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import { useEffect, useMemo, useState } from "react";
 import { formatPrice } from "@/utils/utils";
@@ -58,20 +59,20 @@ export function ExtrasDialog({
           </Button>
         </DialogTrigger>
       </div>
-      <DialogContent aria-describedby="dialog-description">
+      <DialogContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
             <DialogTitle className="mb-2">Add {displayItem.Name}</DialogTitle>
-            <p id="dialog-description" className="sr-only">
+            <DialogDescription className="sr-only">
               Select up to {maxSelectCount} extras for {displayItem.Name}
-            </p>
+            </DialogDescription>
           </DialogHeader>
           <div className="mb-4 grid gap-4">
             <h4 className="font-medium">Extras:</h4>
-            <div className="grid gap-2">
+            <ul className="grid gap-2">
               {extras.length > 0 ? (
                 extras.map((extra) => (
-                  <div
+                  <li
                     className="flex items-center justify-between"
                     key={extra.Id}
                   >
@@ -84,7 +85,7 @@ export function ExtrasDialog({
                       type="checkbox"
                       disabled={hasReachedMaximum && !watchedExtras?.[extra.Id]}
                     />
-                  </div>
+                  </li>
                 ))
               ) : (
                 <p>
@@ -97,7 +98,7 @@ export function ExtrasDialog({
                   Maximum number of extras selected
                 </p>
               )}
-            </div>
+            </ul>
           </div>
           <DialogFooter>
             <Button

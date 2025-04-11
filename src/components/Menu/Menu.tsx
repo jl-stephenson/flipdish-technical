@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { transformMenu } from "../../utils/transformMenu/transformMenu";
 import { formatPrice } from "../../utils/utils";
-import { ExtrasDialog } from "../ExtrasDialog";
+import { ExtrasDialog } from "../ExtrasDialog/ExtrasDialog";
 
 export function Menu() {
   function useMenu() {
@@ -44,12 +44,12 @@ export function Menu() {
               />
             )}
           </header>
-          <div className="my-4 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
+          <ul className="my-4 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
             {section.MenuItems.map((item) =>
               item.DisplayItems.map((displayItem) => (
-                <div
+                <li
                   key={displayItem.Id}
-                  className="grid grid-cols-[1fr_100px_40px] gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-3 py-4 shadow-slate-400 hover:shadow-2xl h-[175px]"
+                  className="grid h-[175px] grid-cols-[1fr_100px_40px] gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-3 py-4 shadow-slate-400 hover:shadow-2xl"
                 >
                   <div className="col-start-1 col-end-2 space-y-2">
                     <h4>{displayItem.Name}</h4>
@@ -73,10 +73,10 @@ export function Menu() {
                     displayItem={displayItem}
                     maxSelectCount={item.MaxSelectCount}
                   />
-                </div>
+                </li>
               )),
             )}
-          </div>
+          </ul>
         </section>
       ))}
     </main>
