@@ -68,10 +68,10 @@ export function ExtrasDialog({
           </DialogHeader>
           <div className="mb-4 grid gap-4">
             <h4 className="font-medium">Extras:</h4>
-            <div className="grid gap-2">
+            <ul className="grid gap-2">
               {extras.length > 0 ? (
                 extras.map((extra) => (
-                  <div
+                  <li
                     className="flex items-center justify-between"
                     key={extra.Id}
                   >
@@ -84,7 +84,7 @@ export function ExtrasDialog({
                       type="checkbox"
                       disabled={hasReachedMaximum && !watchedExtras?.[extra.Id]}
                     />
-                  </div>
+                  </li>
                 ))
               ) : (
                 <p>
@@ -97,7 +97,7 @@ export function ExtrasDialog({
                   Maximum number of extras selected
                 </p>
               )}
-            </div>
+            </ul>
           </div>
           <DialogFooter>
             <Button
