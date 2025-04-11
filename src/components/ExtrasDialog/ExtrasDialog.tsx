@@ -7,8 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Button } from "./ui/button";
+} from "../ui/dialog";
+import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import { useEffect, useMemo, useState } from "react";
 import { formatPrice } from "@/utils/utils";
@@ -64,7 +64,6 @@ export function ExtrasDialog({
           <DialogHeader>
             <DialogTitle className="mb-2">Add {displayItem.Name}</DialogTitle>
             <DialogDescription className="sr-only">
-              {" "}
               Select up to {maxSelectCount} extras for {displayItem.Name}
             </DialogDescription>
           </DialogHeader>
