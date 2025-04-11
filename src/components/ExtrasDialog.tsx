@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -58,13 +59,14 @@ export function ExtrasDialog({
           </Button>
         </DialogTrigger>
       </div>
-      <DialogContent aria-describedby="dialog-description">
+      <DialogContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
             <DialogTitle className="mb-2">Add {displayItem.Name}</DialogTitle>
-            <p id="dialog-description" className="sr-only">
+            <DialogDescription className="sr-only">
+              {" "}
               Select up to {maxSelectCount} extras for {displayItem.Name}
-            </p>
+            </DialogDescription>
           </DialogHeader>
           <div className="mb-4 grid gap-4">
             <h4 className="font-medium">Extras:</h4>
