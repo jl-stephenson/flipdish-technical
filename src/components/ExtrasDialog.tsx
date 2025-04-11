@@ -51,9 +51,9 @@ export function ExtrasDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <div className="col-start-3 col-end-4 self-center h-24 w-full">
+      <div className="col-start-3 col-end-4 h-24 w-full self-center">
         <DialogTrigger asChild>
-          <Button className="rounded-md h-full text-xl hover:cursor-pointer hover:bg-slate-600">
+          <Button className="h-full rounded-md text-xl hover:cursor-pointer hover:bg-slate-600">
             +<span className="sr-only">Add to basket</span>
           </Button>
         </DialogTrigger>
