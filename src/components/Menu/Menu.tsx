@@ -44,10 +44,10 @@ export function Menu() {
               />
             )}
           </header>
-          <div className="my-4 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
+          <ul className="my-4 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
             {section.MenuItems.map((item) =>
               item.DisplayItems.map((displayItem) => (
-                <div
+                <li
                   key={displayItem.Id}
                   className="grid grid-cols-[1fr_100px_40px] gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-3 py-4 shadow-slate-400 hover:shadow-2xl h-[175px]"
                 >
@@ -73,10 +73,10 @@ export function Menu() {
                     displayItem={displayItem}
                     maxSelectCount={item.MaxSelectCount}
                   />
-                </div>
+                </li>
               )),
             )}
-          </div>
+          </ul>
         </section>
       ))}
     </main>
