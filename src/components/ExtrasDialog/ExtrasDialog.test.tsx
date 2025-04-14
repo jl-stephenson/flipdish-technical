@@ -19,9 +19,6 @@ const mockDisplayItems = mockMenu.MenuSections.map(
   .map((item) => item.map((item) => item.DisplayItems))
   .flat(2);
 
-const mockExtras = mockMenu.MenuSections.map((section) => section.MenuItems)
-  .map((item) => item.map((item) => item.Extras))
-  .flat(2);
 
 describe("extras dialog", () => {
   let queryClient: QueryClient;
@@ -52,10 +49,13 @@ describe("extras dialog", () => {
 
     it("opens dialog when clicked", async () => {
       const addButtons = await screen.findAllByText("+");
+
       fireEvent.click(addButtons[0]);
+
       await waitFor(() => {
         expect(screen.getByRole("dialog")).toBeInTheDocument();
       });
     });
   });
+
 });
