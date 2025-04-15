@@ -46,6 +46,7 @@ export function transformMenuItem(item: MenuItem) {
     .map((optionSet) => optionSet.MenuItemOptionSetItems)
     .flat();
 
+  //select highest max select count for optional extras
   const highestMaxSelect = findHighestMaxSelect(item);
 
   return {
