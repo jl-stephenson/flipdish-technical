@@ -51,7 +51,7 @@ export function Menu() {
                   key={displayItem.Id}
                   className="grid h-[175px] grid-cols-[1fr_100px_40px] gap-2 rounded-md border-[1.5px] border-slate-300 bg-white px-3 py-4 shadow-slate-400 hover:shadow-2xl"
                 >
-                  <div className="col-start-1 col-end-2 space-y-2">
+                  <div className="col-start-1 col-end-2 space-y-2 self-center">
                     <h4>{displayItem.Name}</h4>
                     <p className="text-slate-500">
                       {formatPrice(displayItem.Price)}
